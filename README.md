@@ -29,7 +29,7 @@ npm install
 npm run dev
 ```
 
-Builds the project, starts a local server at `http://localhost:3000`, and watches for SCSS and HTML changes.
+Builds the project, starts a local server at `http://localhost:3000`, and watches for SCSS, HTML, and JS changes.
 
 ## Build
 
@@ -61,11 +61,9 @@ src/
     styles.scss       # main stylesheet
     _variables.scss   # HDX color, type, spacing tokens (SCSS)
     _tokens.scss      # HDX CSS custom properties (:root)
-    _fonts.scss       # Humanitarian Icons font
     _grid.scss        # container and country card grid
   assets/
     flags/            # country flag images (ISO3 filenames)
-    fonts/            # Humanitarian Icons v02 font files
     icons/            # HDX SVG icons
 dist/                 # compiled output (git-ignored)
 ```
