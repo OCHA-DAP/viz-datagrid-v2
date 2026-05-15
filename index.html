@@ -1,88 +1,241 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset='utf-8' />
+    <meta charset="utf-8" />
     <title>Data Grid Overview</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <link rel='icon' type='image/png' href='https://data.humdata.org/images/icons/hdx.ico' />
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.11/c3.min.css"/>
-    <link href='css/styles.css' rel='stylesheet' />
-    <script src="https://d3js.org/d3.v5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.11/c3.min.js"></script>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="icon" type="image/png" href="https://data.humdata.org/images/icons/hdx.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.js"></script>
   </head>
 
   <body>
 
-    <div class='loader'>
-      <div class="sp sp-circle"></div>
-      Loading data...
+    <div class="loader">
+      <div class="loader-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
 
     <main>
-      <div class='grid-container'>
-        <div class='col-7'>
-          <div id='intro'></div>
-          <p>
-            <a href='#overview'>Global Overview</a><br>
-            <a href='#category'>Data Grid Availability by Location and Category</a><br>
-            <a href='#subcategory'>Data Grid Availability by Location and Sub-category</a><br>
-          </p>
-        </div>
 
-        <div class='col-3'>
-          <ul class='actions'>
-            <li class='social'>
-              <a href='https://twitter.com/intent/tweet?&amp;original_referer=https%3A%2F%2Fdata.humdata.org%2Fdashboards%2Foverview-of-data-grids &amp;url=https%3A%2F%2Fdata.humdata.org%2Fdashboards%2Foverview-of-data-grids' target='_blank'><i class='humanitarianicons-Social-tw'></i></a>
-              <a href='https://www.facebook.com/sharer.php?u=data.humdata.org' target='_blank' title='Facebook'><i class='humanitarianicons-Social-fb'></i></a>
-              <a href='mailto:?subject=[HDX]: &quot;Data Grid Overview&quot;&amp;body=blurb' target='_blank' title='E-Mail'><i class='humanitarianicons-Social-mail'></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <!-- Intro -->
+      <section class="intro-section">
+        <div class="hdx-container">
+          <div class="intro-layout">
 
-      <div class='grid-container'>
-        <div class='col-10'>
-          <a id='overview'><h2>Global Overview</h2></a>
-        </div>
-      </div>
+            <div class="intro-text">
+              <h1 class="page-title">Data Grid</h1>
+              <p id="intro-body"></p>
+            </div>
 
-      <div class='grid-container'>
-        <div class='col-10'>
-          <div class='overview-container'>
-            <div class='donut-chart'></div>
-            <div class='stats'></div>
+            <div class="intro-right">
+              <div class="intro-meta">
+                <div class="intro-stats-row">
+                  <div class="intro-category-count">
+                    <span id="category-count">—</span> Categories
+                    <span class="subcategory-label"><span id="subcategory-count">—</span> Sub-categories</span>
+                  </div>
+                  <button class="legend-toggle-btn">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16"><path d="M7.99844 2.99935V13.3912M6.86315 13.5479L7.69844 13.7502C7.80931 13.777 7.86475 13.7905 7.92087 13.7959C7.97246 13.801 8.02442 13.801 8.07601 13.7959C8.13212 13.7905 8.18756 13.777 8.29844 13.7502L9.13372 13.5479C9.41188 13.4805 9.55096 13.4468 9.68938 13.4184C10.751 13.2006 11.8459 13.2006 12.9075 13.4184C13.0459 13.4468 13.185 13.4805 13.4632 13.5479C13.5959 13.58 13.6622 13.5961 13.7158 13.6016C14.1457 13.6463 14.5334 13.3416 14.5912 12.9136C14.5984 12.8603 14.5984 12.7921 14.5984 12.6556V3.59872C14.5984 3.40638 14.5984 3.31021 14.5801 3.22609C14.5279 2.9867 14.3687 2.78445 14.1481 2.67735C14.0707 2.63971 13.9771 2.61706 13.79 2.57174C13.187 2.42566 12.8854 2.35261 12.583 2.30345C11.7322 2.16516 10.8647 2.16516 10.0139 2.30345C9.71144 2.35261 9.40991 2.42566 8.80683 2.57174L8.29844 2.69489C8.18756 2.72175 8.13213 2.73518 8.07601 2.74064C8.02442 2.74566 7.97246 2.74566 7.92086 2.74064C7.86475 2.73517 7.80931 2.72175 7.69844 2.69489L7.19005 2.57173C6.587 2.42565 6.28548 2.35261 5.98304 2.30344C5.13223 2.16513 4.26464 2.16513 3.41383 2.30343C3.11139 2.35259 2.80987 2.42563 2.20682 2.57171C2.01976 2.61702 1.92623 2.63968 1.84874 2.67731C1.6282 2.78441 1.46899 2.98667 1.41678 3.22607C1.39844 3.31018 1.39844 3.40635 1.39844 3.59867V12.6556C1.39844 12.7921 1.39844 12.8603 1.40564 12.9136C1.46352 13.3416 1.85119 13.6463 2.28112 13.6016C2.33463 13.5961 2.40099 13.58 2.53372 13.5479C2.81188 13.4805 2.95096 13.4468 3.08938 13.4184C4.15101 13.2006 5.24587 13.2006 6.3075 13.4184C6.44591 13.4468 6.58499 13.4805 6.86315 13.5479Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Legend
+                  </button>
+                </div>
+
+                <div class="category-icons" id="category-icons"></div>
+              </div>
+
+              <div class="update-date">Last update: <span id="update-date"></span></div>
+            </div>
+
           </div>
+          <hr />
         </div>
-      </div>
+      </section>
 
-      <div class='grid-container'>
-        <div class='col-10'>
-          <a id='category'><h2>Data Grid Availability by Location and Category</h2></a>
-          <div class='legend small'>
-            Data Availability: <div class='chip chip-complete'></div> Available and Up-to-date <div class='chip chip-incomplete'></div> Available and Not Up-to-date <div class='chip chip-nodata'></div> Unavailable
+      <!-- Overview -->
+      <section class="overview-section" id="overview">
+        <div class="hdx-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Overview</h2>
+              <p class="section-desc">Total percentage core data part of the data grid.</p>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="chip chip--updated"></span>Available and Up-to-date</span>
+              <span class="legend-item"><span class="chip chip--available"></span>Available and Not Up-to-date</span>
+              <span class="legend-item"><span class="chip chip--unavailable"></span>Unavailable</span>
+            </div>
           </div>
-          <div class='mobile-select'>
-            <label>Select country:</label>
-            <select class='country-select'></select>
+          <div class="overview-bar-container" id="global-bar"></div>
+          <div class="jump-links">
+            <a href="#location"><span class="jump-text">Availability by location</span> ↓</a>
+            <span class="jump-sep">|</span>
+            <a href="#subcategory"><span class="jump-text">Availability by location and sub-category</span> ↓</a>
           </div>
+          <hr />
         </div>
-      </div>
+      </section>
 
-      <div class='grid-container charts'></div>
-      <div class='grid-container subcategory-container'>
-        <div class='col-10'><a id='subcategory'></a></div>
-      </div>
+      <!-- Availability by location -->
+      <section class="location-section" id="location">
+        <div class="hdx-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Availability by location</h2>
+              <p class="section-desc">Total percentage of available core data part of the data grid by location with a Humanitarian Response Plan. Click the location for more details on its datasets.</p>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="chip chip--updated"></span>Available and Up-to-date</span>
+              <span class="legend-item"><span class="chip chip--available"></span>Available and Not Up-to-date</span>
+              <span class="legend-item"><span class="chip chip--unavailable"></span>Unavailable</span>
+            </div>
+          </div>
+
+          <div class="sort-controls">
+            <span class="sort-label">Sort by</span>
+            <button class="sort-btn active" data-sort="az">Alphabetical A-Z</button>
+            <button class="sort-btn" data-sort="za">Alphabetical Z-A</button>
+            <button class="sort-btn" data-sort="unavailable">Most unavailable</button>
+            <button class="sort-btn" data-sort="updated">Most updated &amp; available</button>
+          </div>
+
+          <div class="country-grid" id="country-grid"></div>
+          <div class="show-more-wrap" id="show-more-wrap">
+            <button class="show-more-btn" id="show-more-btn">Show more</button>
+          </div>
+          <hr />
+        </div>
+      </section>
+
+      <!-- Sub-category iframe -->
+      <section class="subcategory-section" id="subcategory">
+        <div class="hdx-container">
+          <div id="subcategory-view-container"></div>
+        </div>
+      </section>
+
     </main>
 
-    <div class='tooltip tooltip-custom'></div>
+    <div class="tooltip-custom"></div>
 
-    <!-- start Mixpanel -->
-    <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
-      0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-      for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
-    </script>
-    <!-- End Mixpanel -->
-    <script type='text/javascript' src='js/bundle.min.js'></script>
+    <div class="legend-overlay" id="legend-overlay"></div>
+    <aside class="legend-drawer" id="legend-drawer" aria-hidden="true" role="dialog" aria-label="Data grids legend">
+      <div class="legend-drawer-header">
+
+        <div class="legend-drawer-title-row">
+          <h2 class="legend-drawer-title">Data grids legend</h2>
+          <button class="legend-drawer-close" id="legend-drawer-close" aria-label="Close">&times;</button>
+        </div>
+        <p class="legend-drawer-desc">The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. These core data are clustered in <strong>6 categories and 20 sub-categories</strong>.</p>
+
+        <nav class="legend-drawer-nav">
+          <a href="#legend-affected"><span>Affected people</span> ↓</a><span class="legend-drawer-sep">|</span>
+          <a href="#legend-coordination"><span>Coordination</span> ↓</a><span class="legend-drawer-sep">|</span>
+          <a href="#legend-food"><span>Food</span> ↓</a><span class="legend-drawer-sep">|</span>
+          <a href="#legend-geography"><span>Geography</span> ↓</a><span class="legend-drawer-sep">|</span>
+          <a href="#legend-health"><span>Health</span> ↓</a><span class="legend-drawer-sep">|</span>
+          <a href="#legend-climate"><span>Climate</span> ↓</a>
+        </nav>
+
+      </div>
+      <div class="legend-drawer-body">
+
+        <div class="legend-category" id="legend-affected">
+          <div class="legend-category-header">
+            <img src="assets/icons/affected.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Affected people</h3>
+          </div>
+          <p class="legend-category-desc">Data about people affected by a crisis</p>
+          <strong class="legend-subcat-name">Internally displaced persons</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Refugees, forcibly displaced and stateless people</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Returnees</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Humanitarian needs</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+        </div>
+
+        <div class="legend-category" id="legend-coordination">
+          <div class="legend-category-header">
+            <img src="assets/icons/coordination.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Coordination &amp; Context</h3>
+          </div>
+          <p class="legend-category-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of all the context in which humanitarian activities are taking place around people affected by a crisis</p>
+          <strong class="legend-subcat-name">Operational presence</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Funding</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Conflict events</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Humanitarian access</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+        </div>
+
+        <div class="legend-category" id="legend-food">
+          <div class="legend-category-header">
+            <img src="assets/icons/food.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Food Security, Nutrition &amp; Poverty</h3>
+          </div>
+          <p class="legend-category-desc">Data about a population's access to food, key nutrition indicators and poverty rates</p>
+          <strong class="legend-subcat-name">Food security</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Acute malnutrition</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Food prices</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Poverty rate</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+        </div>
+
+        <div class="legend-category" id="legend-geography">
+          <div class="legend-category-header">
+            <img src="assets/icons/location.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Geography &amp; Infrastructure</h3>
+          </div>
+          <p class="legend-category-desc">Data describing the administrative divisions as well as baseline data about populated places and key physical geography and infrastructure</p>
+          <strong class="legend-subcat-name">Administrative divisions</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Baseline population</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Populated places</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Roads</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+        </div>
+
+        <div class="legend-category" id="legend-health">
+          <div class="legend-category-header">
+            <img src="assets/icons/health.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Health &amp; Education</h3>
+          </div>
+          <p class="legend-category-desc">Data describing the administrative divisions as well as baseline data about populated places and key physical geography and infrastructure</p>
+          <strong class="legend-subcat-name">Health facilities</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+          <strong class="legend-subcat-name">Education facilities</strong>
+          <p class="legend-subcat-desc">Core data relating to the coordination of humanitarian activities in a country or crisis and an understanding of the context in which humanitarian activities are taking place</p>
+        </div>
+
+        <div class="legend-category" id="legend-climate">
+          <div class="legend-category-header">
+            <img src="assets/icons/climate.svg" alt="" aria-hidden="true" width="20" height="20">
+            <h3 class="legend-category-name">Climate</h3>
+          </div>
+          <p class="legend-category-desc">Current and historical data about climate hazards &amp; impact</p>
+          <strong class="legend-subcat-name">Hazards</strong>
+          <p class="legend-subcat-desc">Current and historical data about climate hazards such as droughts, floods and storms</p>
+          <strong class="legend-subcat-name">Impact</strong>
+          <p class="legend-subcat-desc">Current and/or vector data containing current and historical images of climate events relating to floods, droughts and storms. The data should specify the severity of the event, affected areas, and contain at least one indicator of how a climate event such as capital effect of food, disruption to affected populations, destroyed infrastructure, and/or affected vegetation</p>
+        </div>
+
+      </div><!-- .legend-drawer-body -->
+    </aside>
+
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
