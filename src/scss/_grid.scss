@@ -1,57 +1,54 @@
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 30px;
-  grid-template-rows: auto;
+@use 'variables' as *;
+
+// Container — matches layout.less .hdx-container
+.hdx-container {
+  max-width: 100%;
   margin: 0 auto;
-  max-width: 1173px;
-  &.center--vertical {
-    align-items: center;
+  padding-left: $container-padding-sm;
+  padding-right: $container-padding-sm;
+
+  @media (min-width: $bp-md) {
+    padding-left: $container-padding-md;
+    padding-right: $container-padding-md;
+  }
+
+  @media (min-width: $bp-xxl) {
+    max-width: $container-max-width;
+    padding-left: $container-padding-xxl;
+    padding-right: $container-padding-xxl;
   }
 }
 
-.col-2 {
- grid-column: span 2;
+// 12-column grid utility
+.hdx-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $space-6;
 }
 
-.col-3 {
- grid-column: span 3;
-}
+// Country card grid — 12 columns, cards span 12/6/3 at mobile/tablet/desktop
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $space-4;
+  margin-top: $space-4;
 
-.col-4 {
- grid-column: span 4;
-}
+  .country-card {
+    grid-column: span 12;
 
-.col-6 {
-  grid-column: span 6;
-}
+    @media (min-width: $bp-md) {
+      grid-column: span 6;
+    }
 
-.col-7 {
-  grid-column: span 7;
-}
-
-.col-8 {
-  grid-column: span 8;
-}
-
-.col-10 {
-  grid-column: span 10;
-}
-
-@media only screen and (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 0;
+    @media (min-width: $bp-xl) {
+      grid-column: span 3;
+    }
   }
+}
 
-  .col-2,
-  .col-3,
-  .col-4,
-  .col-6,
-  .col-7,
-  .col-8,
-  .col-10 {
-    grid-column: 1 / -1;
+// Mobile only: hide cards beyond the 10th until expanded
+@media (max-width: calc($bp-md - 1px)) {
+  .country-grid:not(.expanded) .country-card:nth-child(n + 11) {
+    display: none;
   }
 }
