@@ -236,7 +236,7 @@ function setupSortControls() {
 
 function renderSubcategory() {
   document.getElementById('subcategory-view-container').innerHTML =
-    '<iframe id="subcategory-view" src="https://ocha-dap.github.io/viz-datagrid-subcategories"></iframe>';
+    '<iframe id="subcategory-view" src="https://ocha-dap.github.io/viz-datagrid-subcategories-v2/"></iframe>';
 }
 
 function setupTooltip() {
