@@ -237,12 +237,6 @@ function setupSortControls() {
 function renderSubcategory() {
   document.getElementById('subcategory-view-container').innerHTML =
     '<iframe id="subcategory-view" src="https://ocha-dap.github.io/viz-datagrid-subcategories-v2/"></iframe>';
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.iframeHeight) {
-      const iframe = document.getElementById('subcategory-view');
-      if (iframe) iframe.style.height = e.data.iframeHeight + 'px';
-    }
-  });
 }
 
 function setupTooltip() {
