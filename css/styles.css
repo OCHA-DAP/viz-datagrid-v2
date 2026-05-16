@@ -291,7 +291,15 @@ section {
 hr {
   border: none;
   border-top: 1px solid #c4d0d1;
-  margin: 2rem 0 0;
+  margin: 3rem 0 0;
+}
+
+.location-section {
+  padding-bottom: 0;
+}
+
+.subcategory-section {
+  padding-top: 3rem;
 }
 
 .intro-section hr {
