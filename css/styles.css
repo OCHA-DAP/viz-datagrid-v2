@@ -861,10 +861,10 @@ hr {
 
 #subcategory-view {
   border: 0;
-  height: 730px;
-  width: 100%;
   display: block;
+  height: 200px;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .tooltip-custom {
