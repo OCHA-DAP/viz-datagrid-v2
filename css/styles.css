@@ -1084,7 +1084,7 @@ hr {
   font-size: 0.75rem;
   padding: 0.5rem 0.75rem;
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   text-align: center;
   white-space: nowrap;
   width: auto;
