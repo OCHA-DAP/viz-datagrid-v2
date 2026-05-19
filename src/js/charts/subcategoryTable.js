@@ -30,6 +30,7 @@ const ICON_MAP = {
 export function init(sectionEl) {
   let columns, items = [], originalItems = [];
   let sortOrder = 'category';
+  let headerCells = [];
 
   const tableEl  = sectionEl.querySelector('.sc-table-container');
   const sortBtn  = sectionEl.querySelector('.sc-sort-btn');
@@ -67,8 +68,6 @@ export function init(sectionEl) {
       d3.csv(PCT_COMPLETE_SUBCATEGORY),
       d3.csv(PCT_COMPLETE_COUNTRY)
     ]).then(function([data, pctSubcategoryData, pctCountryData]) {
-      const countryMap = d3.group(data, d => d['Location']);
-
       columns = Array.from(new Set(data.map(d => d['Location']))).sort();
       columns.unshift('subcategory');
       columns.push('percentComplete');
@@ -126,13 +125,13 @@ export function init(sectionEl) {
       items.push(pctRow);
     }
 
+    const rebuild = () => {
+      d3.select(tableEl).select('tbody').selectAll('*').remove();
+      buildRows();
+    };
     d3.select(tableEl).select('tbody').selectAll('tr')
       .transition().duration(80).style('opacity', 0)
-      .end().catch(() => {})
-      .then(() => {
-        d3.select(tableEl).select('tbody').selectAll('*').remove();
-        buildRows();
-      });
+      .end().then(rebuild).catch(rebuild);
   }
 
   function createTable() {
@@ -144,6 +143,7 @@ export function init(sectionEl) {
       .classed('rotate', d => !isMetaCol(d))
       .html(d => isMetaCol(d) ? '' : `<div>${d}</div>`);
 
+    headerCells = Array.from(tableEl.querySelectorAll('thead th'));
     table.append('tbody');
     buildRows();
   }
@@ -166,14 +166,14 @@ export function init(sectionEl) {
 
     rows.selectAll('td')
       .data(d => columns.map(col => {
-        const val = d[col] === undefined ? 'Empty' : d[col];
+        const raw = d[col] === undefined ? 'Empty' : d[col];
+        const val = raw === 'Not applicable' ? 'NA' : raw;
         const obj = { name: col, value: val, category: d.category === undefined ? d.subcategory : d.category };
         if (d.subcategory !== 'countryPctComplete') obj.subcategory = d.subcategory;
         return obj;
       })).enter()
       .append('td')
       .attr('class', d => {
-        if (d.value === 'Not applicable') d.value = 'NA';
         const val = d.category === 'countryPctComplete' ? d.value : 'completeness ' + d.value;
         return isMetaCol(d.name) ? d.name : val;
       })
@@ -193,7 +193,7 @@ export function init(sectionEl) {
         if (!row.classList.contains('countryPctComplete')) row.classList.add('active');
 
         const colIndex = event.target.cellIndex;
-        tableEl.querySelectorAll('thead th')[colIndex]?.classList.add('active');
+        headerCells[colIndex]?.classList.add('active');
 
         let content = '';
         if (d.name === 'subcategory') {
@@ -213,13 +213,13 @@ export function init(sectionEl) {
           ? (event.target.querySelector('.icon-container') || event.target)
           : event.target;
         const targetRect  = posEl.getBoundingClientRect();
-        const targetTop   = targetRect.top + window.scrollY;
-        const targetLeft  = targetRect.left + window.scrollX;
+        const targetTop   = targetRect.top;
+        const targetLeft  = targetRect.left;
         const targetWidth = posEl.offsetWidth;
         const tooltipNode = tooltip.node();
         const tooltipHeight = tooltipNode.offsetHeight;
         const tooltipWidth  = tooltipNode.offsetWidth;
-        const isPercentComplete = event.target.className === 'percentComplete';
+        const isPercentComplete = d.name === 'percentComplete';
         const rawLeft = isPercentComplete
           ? targetLeft + targetWidth - tooltipWidth
           : targetLeft + targetWidth / 2 - tooltipWidth / 2;
@@ -232,7 +232,7 @@ export function init(sectionEl) {
       })
       .on('mouseout', function(event) {
         event.target.parentElement.classList.remove('active');
-        tableEl.querySelectorAll('thead th.active').forEach(th => th.classList.remove('active'));
+        headerCells.forEach(th => th.classList.remove('active'));
         tooltip.transition().duration(500).style('opacity', 0);
       });
   }

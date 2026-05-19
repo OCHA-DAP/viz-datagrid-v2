@@ -29,6 +29,9 @@ const CATEGORY_ICONS = {
   'Climate':                                'climate'
 };
 
+const chevronDown = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const chevronUp   = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 10L8 6L12 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
 let globalCounts;
 let allCountries = [];
 let sortMode = 'az';
@@ -92,8 +95,6 @@ function renderIntro(categories, date) {
   introEl.innerHTML = `The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. The core data are clustered in <strong>${categoryCount} categories</strong> and <strong>${subcategoryCount} sub-categories</strong>. Data may be included in the Data Grid if it is relevant to the sub-category, sub-national, has broad geographic coverage, and is shared in a commonly used format. If a dataset on HDX meets these criteria, it is then marked <strong>'available and up-to-date'</strong> or <strong>'available'</strong> according to the assessment of its update frequency set by the contributing organization. If a dataset does not meet the above criteria or it has not been shared on HDX, the referring sub-category is considered <strong>'unavailable'</strong>.`;
 
   const expandLink = document.getElementById('intro-expand');
-  const chevronDown = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const chevronUp   = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 10L8 6L12 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const desktopMQ = window.matchMedia('(min-width: 80rem)');
   let expanded = false;
 
