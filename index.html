@@ -32,6 +32,7 @@
             <div class="intro-text">
               <h1 class="page-title">Data Grid</h1>
               <p id="intro-body"></p>
+              <a href="#" class="expand-link" id="intro-expand"></a>
             </div>
 
             <div class="intro-right">
@@ -106,16 +107,44 @@
 
           <div class="country-grid" id="country-grid"></div>
           <div class="show-more-wrap" id="show-more-wrap">
-            <button class="show-more-btn" id="show-more-btn">Show more</button>
+            <button class="show-more-btn" id="show-more-btn">Show more <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
           <hr />
         </div>
       </section>
 
-      <!-- Sub-category iframe -->
+      <!-- Sub-category table -->
       <section class="subcategory-section" id="subcategory">
         <div class="hdx-container">
-          <div id="subcategory-view-container"></div>
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Availability by location and sub-category</h2>
+              <p class="section-desc">Percentage of core data available by location and sub-category.</p>
+            </div>
+            <div class="subcategory-header-right">
+              <div class="legend">
+                <span class="legend-item"><span class="chip chip--updated"></span>Available and Up-to-date</span>
+                <span class="legend-item"><span class="chip chip--available"></span>Available and Not Up-to-date</span>
+                <span class="legend-item"><span class="chip chip--unavailable"></span>Unavailable</span>
+                <span class="legend-item"><span class="chip chip--na"></span>NA</span>
+              </div>
+              <div class="control-order-by">
+                <label>Sort by</label>
+                <div class="sc-order-dropdown">
+                  <button class="sc-sort-btn" aria-haspopup="listbox">
+                    <span class="sc-dropdown-toggle-text">Category</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <ul class="sc-dropdown-menu" role="menu">
+                    <li><a tabindex="-1" val="category">Category</a></li>
+                    <li><a tabindex="-1" val="dsc">Available % (dsc)</a></li>
+                    <li><a tabindex="-1" val="asc">Available % (asc)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sc-table-container"></div>
         </div>
       </section>
 
@@ -129,9 +158,9 @@
 
         <div class="legend-drawer-title-row">
           <h2 class="legend-drawer-title">Data grids legend</h2>
-          <button class="legend-drawer-close" id="legend-drawer-close" aria-label="Close">&times;</button>
+          <button class="legend-drawer-close" id="legend-drawer-close" aria-label="Close"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 4L4 12M12 12L4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
         </div>
-        <p class="legend-drawer-desc">The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. These core data are clustered in <strong>6 categories and 20 sub-categories</strong>.</p>
+        <p class="legend-drawer-desc">The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. These core data are clustered in <strong>6 categories</strong> and <strong>20 sub-categories</strong>.</p>
 
         <nav class="legend-drawer-nav">
           <a href="#legend-affected"><span>Affected people</span> ↓</a><span class="legend-drawer-sep">|</span>
@@ -140,6 +169,15 @@
           <a href="#legend-geography"><span>Geography</span> ↓</a><span class="legend-drawer-sep">|</span>
           <a href="#legend-health"><span>Health</span> ↓</a><span class="legend-drawer-sep">|</span>
           <a href="#legend-climate"><span>Climate</span> ↓</a>
+          <select class="legend-drawer-nav-select" aria-label="Jump to category">
+            <option value="" disabled selected>Jump to sub-categories</option>
+            <option value="legend-affected">Affected people</option>
+            <option value="legend-coordination">Coordination</option>
+            <option value="legend-food">Food</option>
+            <option value="legend-geography">Geography</option>
+            <option value="legend-health">Health</option>
+            <option value="legend-climate">Climate</option>
+          </select>
         </nav>
 
       </div>

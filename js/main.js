@@ -1,5 +1,6 @@
 import { renderGlobalBar } from './charts/globalBar.js';
 import { renderCountryBar } from './charts/countryBar.js';
+import { init as initSubcategoryTable } from './charts/subcategoryTable.js';
 
 const DATA_PATH = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRguxePjzXGhVXDTL6-JuS5Vppx7fKnk-CBheunS_5RGDKV36tOfLHa5RZ94oO2pDCLcdNC8BBisJzT/pub?single=true&output=csv&gid=';
 const DATA_ID          = 1103779481;
@@ -28,10 +29,6 @@ const CATEGORY_ICONS = {
   'Climate':                                'climate'
 };
 
-const ICON_FALLBACK_ORDER = [
-  'affected', 'coordination', 'food', 'location', 'health', 'climate'
-];
-
 let globalCounts;
 let allCountries = [];
 let sortMode = 'az';
@@ -58,7 +55,7 @@ function getData() {
     renderIntro(categories, date);
     renderOverview();
     renderCountryGrid(allCountries);
-    renderSubcategory();
+    initSubcategoryTable(document.getElementById('subcategory'));
 
     document.querySelector('.loader').style.display = 'none';
     document.querySelector('main').style.opacity = 1;
@@ -82,8 +79,9 @@ function renderIntro(categories, date) {
   document.getElementById('update-date').textContent = date;
 
   const iconsContainer = document.getElementById('category-icons');
-  categories.forEach((cat, i) => {
-    const icon = CATEGORY_ICONS[cat] || ICON_FALLBACK_ORDER[i] || 'Data';
+  categories.forEach((cat) => {
+    const icon = CATEGORY_ICONS[cat];
+    if (!icon) return;
     const item = document.createElement('div');
     item.className = 'category-icon-item';
     item.innerHTML = `<img src="assets/icons/${icon}.svg" alt="" aria-hidden="true" width="20" height="20"><span>${cat}</span>`;
@@ -91,28 +89,31 @@ function renderIntro(categories, date) {
   });
 
   const introEl = document.getElementById('intro-body');
-  const shortText = `The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. The core data are clustered in <strong>${categoryCount} categories and ${subcategoryCount} sub-categories</strong>.`;
-  const fullText = shortText + ` Data may be included in the Data Grid if it is relevant to the sub-category, sub-national, has broad geographic coverage, and is shared in a commonly used format. If a dataset on HDX meets these criteria, it is then marked <strong>'available and up-to-date'</strong> or <strong>'available'</strong> according to the assessment of its update frequency set by the contributing organization. If a dataset does not meet the above criteria or it has not been shared on HDX, the referring sub-category is considered <strong>'unavailable'</strong>.`;
+  introEl.innerHTML = `The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. The core data are clustered in <strong>${categoryCount} categories</strong> and <strong>${subcategoryCount} sub-categories</strong>. Data may be included in the Data Grid if it is relevant to the sub-category, sub-national, has broad geographic coverage, and is shared in a commonly used format. If a dataset on HDX meets these criteria, it is then marked <strong>'available and up-to-date'</strong> or <strong>'available'</strong> according to the assessment of its update frequency set by the contributing organization. If a dataset does not meet the above criteria or it has not been shared on HDX, the referring sub-category is considered <strong>'unavailable'</strong>.`;
 
+  const expandLink = document.getElementById('intro-expand');
+  const chevronDown = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const chevronUp   = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 10L8 6L12 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const desktopMQ = window.matchMedia('(min-width: 80rem)');
   let expanded = false;
 
   function renderIntroText() {
     if (desktopMQ.matches) {
-      introEl.innerHTML = fullText;
+      introEl.classList.remove('is-clamped');
+      expandLink.style.display = 'none';
       return;
     }
-    introEl.innerHTML = expanded
-      ? fullText + ' <a href="#" class="expand-link">Show less</a>'
-      : shortText + ' <a href="#" class="expand-link">Show more</a>';
+    introEl.classList.toggle('is-clamped', !expanded);
+    expandLink.innerHTML = expanded
+      ? `Show less ${chevronUp}`
+      : `Show more ${chevronDown}`;
+    expandLink.style.display = '';
   }
 
-  introEl.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-      e.preventDefault();
-      expanded = !expanded;
-      renderIntroText();
-    }
+  expandLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    expanded = !expanded;
+    renderIntroText();
   });
 
   desktopMQ.addEventListener('change', () => {
@@ -234,11 +235,6 @@ function setupSortControls() {
   });
 }
 
-function renderSubcategory() {
-  document.getElementById('subcategory-view-container').innerHTML =
-    '<iframe id="subcategory-view" src="https://ocha-dap.github.io/viz-datagrid-subcategories-v2/"></iframe>';
-}
-
 function setupTooltip() {
   const tooltip = document.querySelector('.tooltip-custom');
   document.addEventListener('mousemove', (e) => {
@@ -269,6 +265,13 @@ function setupLegendDrawer() {
     document.body.style.overflow = '';
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
+
+  const navSelect = document.querySelector('.legend-drawer-nav-select');
+  navSelect.addEventListener('change', function() {
+    const target = document.getElementById(this.value);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.value = '';
+  });
 
   openBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
