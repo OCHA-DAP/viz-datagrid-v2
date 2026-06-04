@@ -400,7 +400,7 @@ hr {
   }
 
   &.bar-labels--global {
-    font-size: $fs-2xl;
+    font-size: $fs-3xl;
     font-weight: $fw-semibold;
     line-height: $lh-normal;
     color: $hdx-neutral-85;
@@ -887,6 +887,7 @@ hr {
         display: inline-block;
         pointer-events: none;
         text-align: center;
+        vertical-align: middle;
         width: 30px;
       }
     }

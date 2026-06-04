@@ -19,7 +19,7 @@ const ICON_MAP = {
   'Drought':                            'climate',
   'Coordination & Context':             'coordination',
   'Coordination':                       'coordination',
-  'Food Security, Nutrition & Poverty': 'food',
+  'Food Security & Nutrition':          'food',
   'Food Security':                      'food',
   'Geography & Infrastructure':         'location',
   'Locations & Infrastructure':         'location',

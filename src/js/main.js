@@ -20,7 +20,7 @@ const CATEGORY_ICONS = {
   'Coordination':                           'coordination',
   'Coordination & Context':                 'coordination',
   'Food Security':                          'food',
-  'Food Security, Nutrition & Poverty':     'food',
+  'Food Security & Nutrition':              'food',
   'Geography & Infrastructure':             'location',
   'Locations & Infrastructure':             'location',
   'Health':                                 'health',
