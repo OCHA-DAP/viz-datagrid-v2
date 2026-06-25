@@ -141,7 +141,11 @@ export function init(sectionEl) {
       .data(columns).enter()
       .append('th')
       .classed('rotate', d => !isMetaCol(d))
-      .html(d => isMetaCol(d) ? '' : `<div>${d}</div>`);
+      .html(d => {
+        if (isMetaCol(d)) return '';
+        const label = d.length > 20 ? d.slice(0, 20) + '…' : d;
+        return `<div title="${d}">${label}</div>`;
+      });
 
     headerCells = Array.from(tableEl.querySelectorAll('thead th'));
     table.append('tbody');
