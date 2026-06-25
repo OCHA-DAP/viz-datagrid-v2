@@ -14,15 +14,10 @@
     "watch:html": "chokidar 'src/index.html' -c 'cp src/index.html dist/'",
     "watch:js": "chokidar 'src/js/**' -c 'npm run build:js'",
     "dev": "npm run build && sass --watch src/scss/styles.scss:dist/css/styles.css & chokidar 'src/index.html' -c 'cp src/index.html dist/' & chokidar 'src/js/**' -c 'npm run build:js' & npx http-server ./dist -c-1 -p 3000",
-    "start": "npx http-server ./dist -c-1 -p 3000",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "start": "npx http-server ./dist -c-1 -p 3000"
   },
   "author": "Erika Wei",
   "license": "ISC",
-  "dependencies": {
-    "gh-pages": "^5.0.0"
-  },
   "devDependencies": {
     "chokidar-cli": "^3.0.0",
     "sass": "^1.83.0"
