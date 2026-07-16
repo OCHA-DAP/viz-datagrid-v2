@@ -257,6 +257,7 @@ function setupLegendDrawer() {
     overlay.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    drawer.querySelector('.legend-drawer-body').scrollTop = 0;
   }
 
   function close() {

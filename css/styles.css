@@ -221,7 +221,7 @@ html {
 }
 
 body {
-  background-color: #fafbfb;
+  background-color: #ffffff;
   color: #1f2324;
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
@@ -366,7 +366,9 @@ hr {
   flex-direction: column;
   gap: 1.5rem;
   background: #ffffff;
+  border: 1px solid #ebeff0;
   border-radius: var(--hdx-radius-md);
+  box-shadow: var(--hdx-shadow-sm);
   margin-top: 1rem;
   padding: 1.5rem;
 }
@@ -397,8 +399,10 @@ hr {
   white-space: nowrap;
 }
 .legend-toggle-btn:hover {
-  border-color: #b1c1c2;
-  box-shadow: var(--hdx-shadow-md);
+  background-color: #fafbfb;
+  color: #3f4748;
+  border-color: #3f4748;
+  box-shadow: none;
 }
 .legend-toggle-btn svg {
   flex-shrink: 0;
@@ -517,6 +521,9 @@ hr {
 .jump-links a .jump-text {
   text-decoration: underline;
 }
+.jump-links a:hover {
+  color: #1862d8;
+}
 .jump-links .jump-sep {
   color: #9db1b3;
   font-size: 1rem;
@@ -596,8 +603,10 @@ hr {
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 .sort-btn:hover {
-  border-color: #b1c1c2;
-  box-shadow: var(--hdx-shadow-md);
+  background-color: #fafbfb;
+  color: #3f4748;
+  border-color: #3f4748;
+  box-shadow: none;
 }
 .sort-btn.active {
   background: #fafbfb;
@@ -646,7 +655,7 @@ hr {
   }
 }
 .country-card:hover {
-  border-color: #4681e0;
+  border-color: #3f4748;
   box-shadow: var(--hdx-shadow-md);
 }
 
@@ -778,16 +787,15 @@ hr {
 .legend-drawer-close {
   background: none;
   border: none;
-  color: #3f4748;
+  color: #101212;
   cursor: pointer;
   flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1;
   padding: 0;
 }
-.legend-drawer-close svg {
-  display: block;
-}
 .legend-drawer-close:hover {
-  color: #101212;
+  color: #1862d8;
 }
 
 .legend-drawer-desc {
@@ -813,7 +821,7 @@ hr {
   text-decoration: underline;
 }
 .legend-drawer-nav a:hover {
-  color: #101212;
+  color: #1862d8;
 }
 
 .legend-drawer-sep {
@@ -841,7 +849,7 @@ hr {
 
 .legend-category-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
 }
 .legend-category-header i {
