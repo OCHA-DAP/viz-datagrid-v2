@@ -49,7 +49,7 @@ html {
 }
 
 body {
-  background-color: $hdx-neutral-01;
+  background-color: $color-bg;
   color: $color-text;
   font-family: $font-body;
   font-size: $fs-m;
@@ -204,7 +204,9 @@ hr {
   flex-direction: column;
   gap: $space-6;
   background: $color-bg;
+  border: 1px solid $hdx-neutral-1;
   border-radius: var(--hdx-radius-md);
+  box-shadow: var(--hdx-shadow-sm);
   margin-top: $space-4;
   padding: $space-6;
 }
@@ -235,7 +237,12 @@ hr {
   padding: $space-2;
   white-space: nowrap;
 
-  &:hover { border-color: $hdx-neutral-4; box-shadow: var(--hdx-shadow-md); }
+  &:hover {
+    background-color: $hdx-neutral-01;
+    color: $hdx-neutral-8;
+    border-color: $hdx-neutral-8;
+    box-shadow: none;
+  }
 
   svg {
     flex-shrink: 0;
@@ -352,6 +359,10 @@ hr {
     .jump-text {
       text-decoration: underline;
     }
+
+    &:hover {
+      color: $hdx-primary-5;
+    }
   }
 
   .jump-sep {
@@ -443,8 +454,10 @@ hr {
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 
   &:hover {
-    border-color: $hdx-neutral-4;
-    box-shadow: var(--hdx-shadow-md);
+    background-color: $hdx-neutral-01;
+    color: $hdx-neutral-8;
+    border-color: $hdx-neutral-8;
+    box-shadow: none;
   }
 
   &.active {
@@ -493,7 +506,7 @@ hr {
   }
 
   &:hover {
-    border-color: $hdx-primary-4;
+    border-color: $hdx-neutral-8;
     box-shadow: var(--hdx-shadow-md);
   }
 }
@@ -631,15 +644,15 @@ hr {
 .legend-drawer-close {
   background: none;
   border: none;
-  color: $hdx-neutral-8;
+  color: $hdx-neutral-95;
   cursor: pointer;
   flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1;
   padding: 0;
 
-  svg { display: block; }
-
   &:hover {
-    color: $hdx-neutral-95;
+    color: $hdx-primary-5;
   }
 }
 
@@ -663,7 +676,7 @@ hr {
     text-decoration: none;
 
     span { text-decoration: underline; }
-    &:hover { color: $hdx-neutral-95; }
+    &:hover { color: $hdx-primary-5; }
   }
 }
 
@@ -693,7 +706,7 @@ hr {
 
 .legend-category-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: $space-2;
 
   i {
