@@ -92,8 +92,6 @@ function renderIntro(categories, date) {
   });
 
   const introEl = document.getElementById('intro-body');
-  introEl.innerHTML = `The Data Grid collects the most important crisis data per <strong>locations with a Humanitarian Response Plan</strong>. The core data are clustered in <strong>${categoryCount} categories</strong> and <strong>${subcategoryCount} sub-categories</strong>. Data may be included in the Data Grid if it is relevant to the sub-category, sub-national, has broad geographic coverage, and is shared in a commonly used format. If a dataset on HDX meets these criteria, it is then marked <strong>'available and up-to-date'</strong> or <strong>'available'</strong> according to the assessment of its update frequency set by the contributing organization. If a dataset does not meet the above criteria or it has not been shared on HDX, the referring sub-category is considered <strong>'unavailable'</strong>.`;
-
   const expandLink = document.getElementById('intro-expand');
   const desktopMQ = window.matchMedia('(min-width: 80rem)');
   let expanded = false;
@@ -252,12 +250,40 @@ function setupLegendDrawer() {
   const openBtn = document.querySelector('.legend-toggle-btn');
   const closeBtn = document.getElementById('legend-drawer-close');
 
+  // When embedded in a same-origin iframe that is auto-sized to its content, the
+  // iframe never scrolls, so position: fixed spans the whole document. Pin the
+  // drawer to the parent's visible viewport instead so its body can scroll.
+  let parentWin = null;
+  try {
+    if (window.frameElement && window.parent !== window) parentWin = window.parent;
+  } catch (e) {
+    // cross-origin — keep default fixed positioning
+  }
+
+  function fitToParentViewport() {
+    const frameTop = window.frameElement.getBoundingClientRect().top;
+    // Don't let the parent's sticky header cover the drawer title/close button
+    const header = parentWin.document.querySelector('.hdx-v2-header');
+    const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+    const top = Math.max(0, headerBottom - frameTop);
+    const visible = parentWin.innerHeight - Math.max(headerBottom, frameTop);
+    drawer.style.top = top + 'px';
+    drawer.style.bottom = 'auto';
+    drawer.style.height = Math.min(visible, window.innerHeight - top) + 'px';
+  }
+
   function open() {
     drawer.classList.add('is-open');
     overlay.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     drawer.querySelector('.legend-drawer-body').scrollTop = 0;
+    if (parentWin) {
+      fitToParentViewport();
+      parentWin.document.body.style.overflow = 'hidden';
+      parentWin.addEventListener('scroll', fitToParentViewport);
+      parentWin.addEventListener('resize', fitToParentViewport);
+    }
   }
 
   function close() {
@@ -265,6 +291,11 @@ function setupLegendDrawer() {
     overlay.classList.remove('is-open');
     drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (parentWin) {
+      parentWin.document.body.style.overflow = '';
+      parentWin.removeEventListener('scroll', fitToParentViewport);
+      parentWin.removeEventListener('resize', fitToParentViewport);
+    }
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 
