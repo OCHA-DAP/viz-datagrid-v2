@@ -767,6 +767,10 @@ hr {
   scroll-behavior: smooth;
   padding: 0 40px 40px;
 }
+.legend-drawer-body .legend-category:last-child {
+  min-height: 100%;
+  align-content: start;
+}
 
 .legend-drawer-title-row {
   display: flex;
