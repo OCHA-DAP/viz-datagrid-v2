@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupTooltip();
   setupSortControls();
   setupLegendDrawer();
+  setupJumpLinks();
   getData();
 });
 
@@ -310,6 +311,33 @@ function setupLegendDrawer() {
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', close);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+}
+
+function setupJumpLinks() {
+  // Firefox won't scroll the parent page for fragment navigation inside an
+  // auto-sized iframe, so scroll the parent explicitly when embedded.
+  let parentWin = null;
+  try {
+    if (window.frameElement && window.parent !== window) parentWin = window.parent;
+  } catch (e) {
+    return; // cross-origin — leave default anchor behavior
+  }
+  if (!parentWin) return;
+
+  document.querySelectorAll('.jump-links a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.getElementById(link.getAttribute('href').slice(1));
+      if (!target) return;
+      e.preventDefault();
+      const header = parentWin.document.querySelector('.hdx-v2-header');
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const y = parentWin.scrollY
+        + window.frameElement.getBoundingClientRect().top
+        + target.getBoundingClientRect().top
+        - headerH;
+      parentWin.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
 }
 
 function deepLinkView() {
